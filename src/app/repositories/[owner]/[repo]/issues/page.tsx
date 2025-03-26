@@ -7,12 +7,12 @@ import { Spinner } from "@/components/atoms/Spinner";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import { Heading, Link, Text } from "@radix-ui/themes";
 import { AnimatePresence, motion } from "motion/react";
-import { Suspense, Usable, use } from "react";
+import { Suspense, use } from "react";
 
 const IssuesListPage = ({
   params,
 }: {
-  params: Usable<{ repo: string; owner: string }>;
+  params: Promise<{ repo: string; owner: string }>;
 }) => {
   const { repo, owner } = use(params);
 
