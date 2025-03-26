@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Row } from "@/components/atoms/Row";
 import { CardStackIcon } from "@radix-ui/react-icons";
 import { AnimatePresence, motion } from "motion/react";
+import { Spinner } from "@/components/atoms/Spinner";
 
 export const IssuesList = ({
   repo,
@@ -14,7 +15,10 @@ export const IssuesList = ({
   repo: string;
   owner: string;
 }) => {
-  const { data, fetchNextPage } = useIssuesQuery({ repo, owner });
+  const { data, fetchNextPage, isFetchingNextPage } = useIssuesQuery({
+    repo,
+    owner,
+  });
 
   const { ref } = useInView({
     trackVisibility: true,
@@ -59,6 +63,16 @@ export const IssuesList = ({
           })}
         </ul>
       </motion.div>
+      {isFetchingNextPage && (
+        <motion.div
+          key={"fetching-next-page"}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 1 }}
+        >
+          <Spinner />
+        </motion.div>
+      )}
     </AnimatePresence>
   );
 };
