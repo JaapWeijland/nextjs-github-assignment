@@ -1,36 +1,26 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Assessment (GH issue viewer)
 
-## Getting Started
+For this assessment we would like you to make a small web app that makes it possible to view a list with issues from a public GitHub repo. You’ll have to use the Github API to build it
 
-First, run the development server:
+**Functional requirements**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Next.js App or Expo app
+- User can input Github Organization & Repo (for example vercel/nextjs)
+- User should be able to view the issues
+- User should be able to scroll trough and when they reach the bottom, new issues should load
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Technical requirements**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Static types (typescript)
+- Proper UI/UX
+- No Redux
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Bonus points**
 
-## Learn More
+- Being able to sort the issues, and/or:
+- Having some nice animations, and/or:
+- Persistence and cache management with react-query
 
-To learn more about Next.js, take a look at the following resources:
+The total time spend on the assessment shouldn’t be more than 4 to 5 hours. When finished, we’d love to see the source code, a working demo on a public url or expo link and a short video (max 5 minutes) walking us trough the codebase.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+In case of any questions, let us know!
