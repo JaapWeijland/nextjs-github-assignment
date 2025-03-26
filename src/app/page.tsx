@@ -9,7 +9,7 @@ import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Select, TextField } from "@radix-ui/themes";
 import { AnimatePresence, motion } from "motion/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useCallback, useEffect, useState } from "react";
+import { memo, Suspense, useCallback, useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 
 export default function Home() {
@@ -20,6 +20,10 @@ export default function Home() {
   const [debouncedTerm] = useDebounce(term, 500);
 
   const pathname = usePathname();
+
+  // Uncomment this section to mimick errors
+  // const randomError = useRef(Math.random() > 0.9);
+  // if (randomError.current) throw Error("Expected error");
 
   // Get a new searchParams string by merging the current
   // searchParams with a provided key/value pair
@@ -39,7 +43,7 @@ export default function Home() {
 
   return (
     <motion.div
-      key="loading"
+      key="page-loading"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -51,7 +55,7 @@ export default function Home() {
               className="flex-1"
               placeholder="Search Github…"
               onChange={(e) => setTerm(e.target.value)}
-              value={term}
+              defaultValue={term}
               size="3"
             >
               <TextField.Slot>
@@ -91,10 +95,16 @@ export default function Home() {
               </AnimatePresence>
             }
           >
-            <RepositoryList term={debouncedTerm} sort={sort} />
+            <MemoizedRepositoryList
+              key={debouncedTerm + sort}
+              term={debouncedTerm}
+              sort={sort}
+            />
           </Suspense>
         </Column>
       </Column>
     </motion.div>
   );
 }
+
+const MemoizedRepositoryList = memo(RepositoryList);

@@ -1,3 +1,5 @@
+"use client";
+
 import { SortValue, useSearchQuery } from "@/api/queries/useSearchQuery";
 import { useInView } from "react-intersection-observer";
 import { Column } from "@/components/atoms/Column";
@@ -6,6 +8,7 @@ import { Row } from "@/components/atoms/Row";
 import { Card, Text } from "@radix-ui/themes";
 import { StarIcon } from "@radix-ui/react-icons";
 import { AnimatePresence, motion } from "motion/react";
+import { Spinner } from "@/components/atoms/Spinner";
 
 export const RepositoryList = ({
   term,
@@ -14,7 +17,11 @@ export const RepositoryList = ({
   term: string;
   sort: SortValue;
 }) => {
-  const { data, fetchNextPage } = useSearchQuery({ term, sort });
+  console.log("rerendering");
+  const { data, fetchNextPage, isFetchingNextPage } = useSearchQuery({
+    term,
+    sort,
+  });
 
   const { ref } = useInView({
     trackVisibility: true,
@@ -26,9 +33,13 @@ export const RepositoryList = ({
     },
   });
 
+  const hasTerm = term !== "";
+  const hasNoResults =
+    data.pages.length === 1 && data.pages[0].items.length === 0 && hasTerm;
+
   return (
     <AnimatePresence>
-      {term === "" && (
+      {!hasTerm && (
         <motion.div
           key={"no-term"}
           initial={{ opacity: 0 }}
@@ -42,22 +53,20 @@ export const RepositoryList = ({
           </Column>
         </motion.div>
       )}
-      {data.pages.length === 1 &&
-        data.pages[0].items.length === 0 &&
-        term !== "" && (
-          <motion.div
-            key={"no-results"}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 1 }}
-          >
-            <Column className="py-4">
-              <Text color="gray" align="center" size="2">
-                No results found
-              </Text>
-            </Column>
-          </motion.div>
-        )}
+      {hasNoResults && (
+        <motion.div
+          key={"no-results"}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 1 }}
+        >
+          <Column className="py-4">
+            <Text color="gray" align="center" size="2">
+              No results found
+            </Text>
+          </Column>
+        </motion.div>
+      )}
       <motion.div
         key={term + sort}
         initial={{ opacity: 0 }}
@@ -92,6 +101,16 @@ export const RepositoryList = ({
           })}
         </ul>
       </motion.div>
+      {isFetchingNextPage && (
+        <motion.div
+          key={"fetching-next-page"}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 1 }}
+        >
+          <Spinner />
+        </motion.div>
+      )}
     </AnimatePresence>
   );
 };

@@ -7,7 +7,7 @@ import { Spinner } from "@/components/atoms/Spinner";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import { Heading, Link, Text } from "@radix-ui/themes";
 import { AnimatePresence, motion } from "motion/react";
-import { Suspense, use } from "react";
+import { memo, Suspense, use } from "react";
 
 const IssuesListPage = ({
   params,
@@ -56,11 +56,13 @@ const IssuesListPage = ({
             </AnimatePresence>
           }
         >
-          <IssuesList repo={repo} owner={owner} />
+          <MemoizedIssuesList key={repo + owner} repo={repo} owner={owner} />
         </Suspense>
       </Column>
     </motion.div>
   );
 };
+
+const MemoizedIssuesList = memo(IssuesList);
 
 export default IssuesListPage;
