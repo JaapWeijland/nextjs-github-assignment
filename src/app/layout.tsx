@@ -1,14 +1,16 @@
-"use client";
-
 import "./globals.css";
 import "@radix-ui/themes/styles.css";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "@/api/query-client";
 import { Avatar, Theme, Text, Heading } from "@radix-ui/themes";
 import { AnimatePresence } from "motion/react";
 import { Column } from "@/components/atoms/Column";
 import { Row } from "@/components/atoms/Row";
 import { Page } from "@/components/templates/Page";
+import { ClientProviders } from "@/app/_components/ClientProviders";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Reversed - Job Application",
+};
 
 export default function RootLayout({
   children,
@@ -19,7 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Theme appearance="dark">
-          <QueryClientProvider client={queryClient}>
+          <ClientProviders>
             <Page>
               <Column className="gap-16">
                 <Row className="justify-between">
@@ -45,7 +47,7 @@ export default function RootLayout({
                 <AnimatePresence>{children}</AnimatePresence>
               </Column>
             </Page>
-          </QueryClientProvider>
+          </ClientProviders>
         </Theme>
       </body>
     </html>
